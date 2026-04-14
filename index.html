@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recital Planner — Tu recital, sin el caos</title>
+  <meta name="description" content="Planificá tu próximo recital en 2 minutos. Outfit, horario y checklist personalizados para que disfrutes sin preocuparte por nada.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="app-wrapper">
+    <div class="phone-frame">
+
+      <!-- ===========================
+           SCREEN 1: HOME
+      =========================== -->
+      <div class="screen active" id="screen-home">
+        <div class="screen-content home-content">
+
+          <div class="logo-circle">
+            <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" width="52" height="52">
+              <path d="M16 4L18.2 12.2L26.8 11L20.4 16.6L23.6 24.8L16 20.4L8.4 24.8L11.6 16.6L5.2 11L13.8 12.2L16 4Z" fill="white" opacity="0.95"/>
+              <circle cx="24" cy="7" r="2" fill="white" opacity="0.8"/>
+              <path d="M24 4L24.8 6.4L27.2 7L24.8 7.6L24 10L23.2 7.6L20.8 7L23.2 6.4L24 4Z" fill="white"/>
+            </svg>
+          </div>
+
+          <div class="home-title">
+            <h1>Tu recital,</h1>
+            <span class="title-accent">sin el caos</span>
+          </div>
+
+          <p class="home-subtitle">Outfit, horario y checklist en 2 minutos</p>
+
+          <button class="btn-primary" id="btn-start" onclick="showScreen('screen-form')">
+            Armar mi plan
+          </button>
+
+          <div class="feature-pills">
+            <span class="pill pill-yellow">Outfit</span>
+            <span class="pill pill-orange">Horario</span>
+            <span class="pill pill-green">Checklist</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ===========================
+           SCREEN 2: FORM
+      =========================== -->
+      <div class="screen" id="screen-form">
+        <div class="screen-content form-content">
+
+          <div class="form-header">
+            <h2>Contanos del recital</h2>
+            <p>Solo tardarás 2 minutos</p>
+          </div>
+
+          <div class="form-group">
+            <label for="input-concert">¿A qué recital vas?</label>
+            <input
+              type="text"
+              id="input-concert"
+              placeholder="Ej: Coldplay, Taylor Swift..."
+              class="form-input"
+              autocomplete="off"
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="input-city">Ciudad</label>
+            <div class="input-with-icon">
+              <span class="input-icon">📍</span>
+              <select id="input-city" class="form-input form-select">
+                <option value="">Seleccioná...</option>
+                <option value="Buenos Aires">Buenos Aires</option>
+                <option value="Córdoba">Córdoba</option>
+                <option value="Rosario">Rosario</option>
+                <option value="Mendoza">Mendoza</option>
+                <option value="La Plata">La Plata</option>
+                <option value="Mar del Plata">Mar del Plata</option>
+                <option value="Tucumán">Tucumán</option>
+                <option value="Salta">Salta</option>
+                <option value="Santa Fe">Santa Fe</option>
+                <option value="Neuquén">Neuquén</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="input-date">Fecha</label>
+            <div class="input-with-icon">
+              <span class="input-icon">📅</span>
+              <input type="date" id="input-date" class="form-input form-date">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="label-with-icon">
+              <span>👥</span> ¿Con quién vas?
+            </label>
+            <div class="companion-buttons">
+              <button class="companion-btn active" data-type="solo" id="btn-solo" onclick="selectCompanion('solo')">Solo</button>
+              <button class="companion-btn" data-type="pareja" id="btn-pareja" onclick="selectCompanion('pareja')">Pareja</button>
+              <button class="companion-btn" data-type="grupo" id="btn-grupo" onclick="selectCompanion('grupo')">Grupo</button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="label-with-icon">
+              <span>💵</span> Presupuesto estimado
+            </label>
+            <div class="budget-card">
+              <div class="budget-display">
+                <span id="budget-display" class="budget-amount">$50.000</span>
+                <span class="budget-label">por persona</span>
+              </div>
+              <input
+                type="range"
+                id="budget-slider"
+                min="10000"
+                max="200000"
+                step="5000"
+                value="50000"
+                class="budget-slider"
+                aria-label="Presupuesto estimado"
+              >
+            </div>
+          </div>
+
+          <button class="btn-primary" id="btn-create" onclick="createPlan()">
+            Crear mi plan
+          </button>
+
+        </div>
+      </div>
+
+      <!-- ===========================
+           SCREEN 3: RESULTS
+      =========================== -->
+      <div class="screen" id="screen-results">
+        <div class="screen-content results-content" id="results-content">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+
+      <!-- ===========================
+           SCREEN 4: SHARE
+      =========================== -->
+      <div class="screen" id="screen-share">
+        <div class="screen-content share-content">
+
+          <button class="btn-back" onclick="showScreen('screen-results')">
+            ← Volver al plan
+          </button>
+
+          <h2 class="share-title">¡Listo para compartir!</h2>
+          <p class="share-subtitle">Mandáselo al grupo antes del show</p>
+
+          <div class="share-card" id="share-card">
+            <!-- Populated dynamically -->
+          </div>
+
+          <div class="share-options">
+
+            <div class="share-option" id="share-copy" onclick="copyLink()">
+              <div class="share-option-icon icon-link">🔗</div>
+              <div class="share-option-text">
+                <strong>Copiar link</strong>
+                <span>Compartí en donde quieras</span>
+              </div>
+              <button class="share-btn" tabindex="-1">Click</button>
+            </div>
+
+            <div class="share-option" id="share-whatsapp" onclick="shareWhatsApp()">
+              <div class="share-option-icon icon-whatsapp">
+                <svg viewBox="0 0 24 24" fill="white" width="22" height="22" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                </svg>
+              </div>
+              <div class="share-option-text">
+                <strong>WhatsApp</strong>
+                <span>Mandalo directo al grupo</span>
+              </div>
+              <button class="share-btn" tabindex="-1">Click</button>
+            </div>
+
+            <div class="share-option" id="share-download" onclick="downloadImage()">
+              <div class="share-option-icon icon-download">⬇️</div>
+              <div class="share-option-text">
+                <strong>Descargar imagen</strong>
+                <span>Para Instagram Stories</span>
+              </div>
+              <button class="share-btn" tabindex="-1">Click</button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast notification -->
+  <div class="toast" id="toast" role="alert" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
