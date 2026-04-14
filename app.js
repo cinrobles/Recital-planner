@@ -55,11 +55,11 @@ function selectCompanion(type) {
 // ===========================
 // CREATE PLAN (validate → generate → render → navigate)
 // ===========================
+// CREATE PLAN — show loading → generate → navigate to results
 function createPlan() {
   const concert = document.getElementById('input-concert').value.trim();
   const city    = document.getElementById('input-city').value;
   const date    = document.getElementById('input-date').value;
-
   if (!concert) { showToast('¡Escribí el nombre del recital 🎵'); return; }
   if (!city)    { showToast('¡Seleccioná una ciudad 📍');          return; }
   if (!date)    { showToast('¡Elegí la fecha del evento 📅');      return; }
@@ -68,9 +68,45 @@ function createPlan() {
   state.city    = city;
   state.date    = date;
 
+  // 1. Show loading screen immediately
+  showScreen('screen-loading');
+  startLoadingAnimation();
+}
+
+// LOADING SCREEN ANIMATION
+function startLoadingAnimation() {
+  // Reset steps & bar
+  [1, 2, 3].forEach(i => {
+    const el = document.getElementById(`lstep-${i}`);
+    if (el) el.classList.remove('visible');
+  });
+  const bar = document.getElementById('loading-bar');
+  if (bar) {
+    bar.style.transition = 'none';
+    bar.style.width = '0%';
+  }
+
+  // Animate steps appearing one by one
+  setTimeout(() => { document.getElementById('lstep-1')?.classList.add('visible'); }, 400);
+  setTimeout(() => { document.getElementById('lstep-2')?.classList.add('visible'); }, 900);
+  setTimeout(() => { document.getElementById('lstep-3')?.classList.add('visible'); }, 1400);
+
+  // Start progress bar fill
+  setTimeout(() => {
+    if (bar) {
+      bar.style.transition = 'width 2.4s cubic-bezier(0.4, 0, 0.2, 1)';
+      bar.style.width = '100%';
+    }
+  }, 50);
+
+  // Generate plan data in parallel (instant, no real API)
   generatePlan();
   renderResults();
-  showScreen('screen-results');
+
+  // After animation completes → navigate to results
+  setTimeout(() => {
+    showScreen('screen-results');
+  }, 2800);
 }
 
 // ===========================

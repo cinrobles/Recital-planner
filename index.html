@@ -140,7 +140,59 @@
       </div>
 
       <!-- ===========================
-           SCREEN 3: RESULTS
+           SCREEN 3: LOADING
+      =========================== -->
+      <div class="screen" id="screen-loading">
+        <div class="screen-content loading-content">
+
+          <div class="loading-circle">
+            <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" width="52" height="52">
+              <path d="M6 10 C6 8 8 7 10 7 L22 7 C24 7 26 8 26 10 L26 11 C26 13 24 13 24 13 L8 13 C8 13 6 13 6 11 Z" fill="white" opacity="0.9"/>
+              <rect x="13" y="7" width="6" height="3" rx="1.5" fill="white" opacity="0.7"/>
+              <path d="M8 13 L8 25 C8 26 9 27 10 27 L22 27 C23 27 24 26 24 25 L24 13 Z" fill="white" opacity="0.95"/>
+            </svg>
+          </div>
+
+          <h2 class="loading-title">Estamos armando<br>tu plan...</h2>
+
+          <div class="loading-steps">
+            <div class="loading-step" id="lstep-1">
+              <div class="lstep-icon lstep-blue">
+                <svg viewBox="0 0 20 20" fill="white" width="18" height="18">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+              <span>Consultando el clima...</span>
+            </div>
+
+            <div class="loading-step" id="lstep-2">
+              <div class="lstep-icon lstep-yellow">
+                <svg viewBox="0 0 20 20" fill="white" width="18" height="18">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+              <span>Armando tu outfit...</span>
+            </div>
+
+            <div class="loading-step" id="lstep-3">
+              <div class="lstep-icon lstep-green">
+                <svg viewBox="0 0 20 20" fill="white" width="18" height="18">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+              <span>Preparando tu checklist...</span>
+            </div>
+          </div>
+
+          <div class="loading-bar-track">
+            <div class="loading-bar-fill" id="loading-bar"></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ===========================
+           SCREEN 4: RESULTS
       =========================== -->
       <div class="screen" id="screen-results">
         <div class="screen-content results-content" id="results-content">
@@ -149,7 +201,7 @@
       </div>
 
       <!-- ===========================
-           SCREEN 4: SHARE
+           SCREEN 5: SHARE
       =========================== -->
       <div class="screen" id="screen-share">
         <div class="screen-content share-content">
