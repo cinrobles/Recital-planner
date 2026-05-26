@@ -30,6 +30,18 @@
 - `anon_insert_planes` / `anon_select_planes` ✅
 - `anon_insert_participantes` / `anon_select_participantes` ✅
 
+## Analytics — PostHog
+- **API Key:** `phc_oLL787wRd9NLRbHiJYuqebziEN6vPw3RE7S7kaitp6pJ`
+- **Host:** https://us.i.posthog.com
+
+### Eventos trackeados
+| Evento | Propiedades |
+|---|---|
+| `plan_created` | concert, city, companion, budget |
+| `plan_shared_link` | concert, city, plan_id |
+| `plan_shared_whatsapp` | concert, city, plan_id |
+| `plan_viewed_from_link` | plan_id, concert, city |
+
 ## Funcionalidades Implementadas
 - [x] Pantalla Home
 - [x] Formulario (artista, ciudad, fecha, compañía, presupuesto)
@@ -40,6 +52,7 @@
 - [x] Link compartible con `?plan=UUID`
 - [x] Cargar plan desde URL compartida
 - [x] GitHub Pages publicado
+- [x] PostHog analytics integrado
 
 ## Pendiente / Próximos pasos
 - [ ] Tabla Participantes: que otros se anoten al plan compartido
