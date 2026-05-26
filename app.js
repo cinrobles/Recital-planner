@@ -76,6 +76,16 @@ function createPlan() {
   state.city    = city;
   state.date    = date;
 
+  // Trackear creación de plan en PostHog
+  if (window.posthog) {
+    posthog.capture('plan_created', {
+      concert:   concert,
+      city:      city,
+      companion: state.companion,
+      budget:    state.budget,
+    });
+  }
+
   // 1. Show loading screen immediately
   showScreen('screen-loading');
   startLoadingAnimation();
@@ -372,6 +382,11 @@ function copyLink() {
   const { concert, city, plan } = state;
   if (!plan) return;
 
+  // Trackear en PostHog
+  if (window.posthog) {
+    posthog.capture('plan_shared_link', { concert, city, plan_id: state.planId });
+  }
+
   const url = getPlanURL();
   const text =
     `🎵 Mi plan para el recital de ${concert} en ${city}!\n` +
@@ -388,6 +403,11 @@ function copyLink() {
 function shareWhatsApp() {
   const { concert, city, plan } = state;
   if (!plan) return;
+
+  // Trackear en PostHog
+  if (window.posthog) {
+    posthog.capture('plan_shared_whatsapp', { concert, city, plan_id: state.planId });
+  }
 
   const url = getPlanURL();
   const text =
@@ -496,6 +516,15 @@ async function loadPlanFromURL() {
 
     renderResults();
     setTimeout(() => showScreen('screen-results'), 800);
+
+    // Trackear visualización de plan compartido
+    if (window.posthog) {
+      posthog.capture('plan_viewed_from_link', {
+        plan_id: planId,
+        concert: state.concert,
+        city:    state.city,
+      });
+    }
 
   } catch (err) {
     console.warn('No se pudo cargar el plan:', err.message);
