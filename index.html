@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Recital Planner — Tu recital, sin el caos</title>
+  <title>Manija — Tu recital, sin el caos</title>
   <meta name="description" content="Planificá tu próximo recital en 2 minutos. Outfit, horario y checklist personalizados para que disfrutes sin preocuparte por nada.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,35 +27,89 @@
       <!-- ===========================
            SCREEN 1: HOME
       =========================== -->
-      <div class="screen active" id="screen-home">
-        <div class="screen-content home-content">
+      <div class="screen active" id="screen-home" style="background-color: var(--bg-cream);">
+        <div class="screen-content home-content new-design">
+          
+          <!-- Header -->
+          <header class="home-header">
+            <button class="btn-menu" aria-label="Menu">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
+            <div class="logo-manija">Manija</div>
+            <img src="assets/user_avatar.png" alt="Perfil" class="user-avatar">
+          </header>
 
-          <div class="logo-circle">
-            <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" width="52" height="52">
-              <path d="M16 4L18.2 12.2L26.8 11L20.4 16.6L23.6 24.8L16 20.4L8.4 24.8L11.6 16.6L5.2 11L13.8 12.2L16 4Z" fill="white" opacity="0.95"/>
-              <circle cx="24" cy="7" r="2" fill="white" opacity="0.8"/>
-              <path d="M24 4L24.8 6.4L27.2 7L24.8 7.6L24 10L23.2 7.6L20.8 7L23.2 6.4L24 4Z" fill="white"/>
-            </svg>
+          <!-- Hero Image Section -->
+          <div class="hero-image-container">
+            <div class="hero-bg-shape"></div>
+            <img src="assets/hero_musician.png" alt="Recital" class="hero-img">
+            
+            <div class="floating-badge badge-ticket">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5.5v13M9 5.5v13M3 10a2 2 0 0 1 2-2V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v3a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2v3a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-3a2 2 0 0 1-2-2v-4z"></path></svg>
+            </div>
+            <div class="floating-badge badge-check">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
           </div>
 
-          <div class="home-title">
+          <!-- Typography -->
+          <div class="home-title new">
             <h1>Tu recital,</h1>
-            <span class="title-accent">sin el caos</span>
+            <span class="title-accent new">sin el caos</span>
           </div>
+          <p class="home-subtitle new">Outfit, horario y checklist en 2 minutos</p>
 
-          <p class="home-subtitle">Outfit, horario y checklist en 2 minutos</p>
-
-          <button class="btn-primary" id="btn-start" onclick="showScreen('screen-form')">
+          <!-- CTA -->
+          <button class="btn-primary new-btn" id="btn-start" onclick="showScreen('screen-form')">
             Armar mi plan
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
           </button>
 
-          <div class="feature-pills">
-            <span class="pill pill-yellow">Outfit</span>
-            <span class="pill pill-orange">Horario</span>
-            <span class="pill pill-green">Checklist</span>
+          <!-- Feature Cards -->
+          <div class="features-grid">
+            <div class="feature-card fcard-blue">
+              <div class="fcard-icon ficon-blue">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 13l6-8 6 8M6 13h12M12 5v14"></path></svg>
+              </div>
+              <h3>Outfit<br>Tracker</h3>
+              <p>Combina prendas según el clima.</p>
+            </div>
+            <div class="feature-card fcard-green">
+              <div class="fcard-icon ficon-green">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              </div>
+              <h3>Timeline<br>Real</h3>
+              <p>Evitá las filas y llegá al VIP.</p>
+            </div>
           </div>
 
+          <!-- Social Proof -->
+          <div class="social-proof">
+            <div class="social-avatars">
+              <img src="assets/social_avatars.png" alt="Users">
+            </div>
+            <span>+2.4k manijas planeando</span>
+          </div>
+          
         </div>
+
+        <!-- Footer -->
+        <footer class="home-footer">
+          <div class="footer-header">
+            <div class="logo-manija footer-logo">Manija.</div>
+            <div class="footer-icons">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            </div>
+          </div>
+          <div class="newsletter-section">
+            <h4>NEWSLETTER PREMIUM</h4>
+            <div class="newsletter-input-group">
+              <input type="email" placeholder="Tu email">
+              <button class="btn-ok">OK</button>
+            </div>
+          </div>
+        </footer>
       </div>
 
       <!-- ===========================
