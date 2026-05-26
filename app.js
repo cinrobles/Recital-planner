@@ -1,4 +1,11 @@
 // ===========================
+// SUPABASE CLIENT
+// ===========================
+const SUPABASE_URL  = 'https://yaliibvznvvgmfytnrmy.supabase.co';
+const SUPABASE_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlhbGlpYnZ6bnZ2Z21meXRucm15Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU1MjMzMDcsImV4cCI6MjA5MTA5OTMwN30.AlZhy8F-1xqPmupPoX2ptBv6-BVhnd79urK1LO8KkCA';
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// ===========================
 // STATE
 // ===========================
 const state = {
@@ -8,6 +15,7 @@ const state = {
   companion: 'solo',
   budget:    50000,
   plan:      null,
+  planId:    null,   // UUID del plan guardado en Supabase
 };
 
 // ===========================
@@ -99,9 +107,12 @@ function startLoadingAnimation() {
     }
   }, 50);
 
-  // Generate plan data in parallel (instant, no real API)
+  // Generate plan data
   generatePlan();
   renderResults();
+
+  // Save to Supabase in parallel (no bloqueamos la UI)
+  saveToSupabase();
 
   // After animation completes → navigate to results
   setTimeout(() => {
@@ -182,6 +193,54 @@ function generatePlan() {
     formattedDate: formatDate(year, month, day),
     shortDate:     formatShortDate(day, month),
   };
+}
+
+// ===========================
+// GUARDAR PLAN EN SUPABASE
+// ===========================
+async function saveToSupabase() {
+  try {
+    const [year, month, day] = state.date.split('-').map(Number);
+    const fechaISO = new Date(year, month - 1, day).toISOString();
+
+    // 1. Insertar en Recitales
+    const { data: recital, error: recitalError } = await db
+      .from('Recitales')
+      .insert({
+        artista:    state.concert,
+        fecha_hora: fechaISO,
+        lugar:      state.city,
+      })
+      .select()
+      .single();
+
+    if (recitalError) throw recitalError;
+
+    // 2. Insertar en Planes (id = recital.id por relación 1:1)
+    const outfitTexto = state.plan.outfit.map(o => o.name).join(', ');
+    const { data: plan, error: planError } = await db
+      .from('Planes')
+      .insert({
+        id:               recital.id,
+        recital_id:       recital.id,
+        horario_salida:   state.plan.departureTime + ':00',
+        outfit_sugerido:  outfitTexto,
+        checklist:        state.plan.checklist,
+        clima_info:       `${state.plan.temp}°C - ${state.city}`,
+        created_at:       new Date().toISOString(),
+      })
+      .select()
+      .single();
+
+    if (planError) throw planError;
+
+    state.planId = plan.id;
+    console.log('✅ Plan guardado en Supabase con ID:', plan.id);
+
+  } catch (err) {
+    // No bloqueamos la app si falla el guardado
+    console.warn('⚠️ No se pudo guardar en Supabase:', err.message);
+  }
 }
 
 // ===========================
@@ -304,18 +363,25 @@ function renderShare() {
 // ===========================
 // SHARE ACTIONS
 // ===========================
+function getPlanURL() {
+  const base = window.location.origin + window.location.pathname;
+  return state.planId ? `${base}?plan=${state.planId}` : base;
+}
+
 function copyLink() {
   const { concert, city, plan } = state;
   if (!plan) return;
 
+  const url = getPlanURL();
   const text =
     `🎵 Mi plan para el recital de ${concert} en ${city}!\n` +
     `✅ Outfit ✅ Horario ✅ Checklist\n` +
     `🕐 Salida: ${plan.departureTime} hs\n` +
+    `🔗 Ver plan completo: ${url}\n` +
     `Creado en Recital Planner 🎉`;
 
   navigator.clipboard.writeText(text)
-    .then(() => showToast('¡Copiado al portapapeles! 📋'))
+    .then(() => showToast('¡Link copiado! 🔗📋'))
     .catch(() => showToast('No se pudo copiar 😢'));
 }
 
@@ -323,10 +389,12 @@ function shareWhatsApp() {
   const { concert, city, plan } = state;
   if (!plan) return;
 
+  const url = getPlanURL();
   const text =
     `🎵 Mi plan para *${concert}* en ${city}!\n` +
     `✅ Outfit ✅ Horario ✅ Checklist\n` +
     `🕐 Salgo a las ${plan.departureTime} hs en ${plan.transport}\n` +
+    `🔗 Ver plan completo: ${url}\n` +
     `Creado con Recital Planner 🎉`;
 
   window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
@@ -386,6 +454,56 @@ document.addEventListener('keydown', e => {
 // ===========================
 // INIT
 // ===========================
+// ===========================
+// CARGAR PLAN DESDE URL (?plan=UUID)
+// ===========================
+async function loadPlanFromURL() {
+  const params = new URLSearchParams(window.location.search);
+  const planId = params.get('plan');
+  if (!planId) return;
+
+  try {
+    showScreen('screen-loading');
+    // Forzar barra llena instantánea para modo lectura
+    const bar = document.getElementById('loading-bar');
+    if (bar) { bar.style.transition = 'none'; bar.style.width = '100%'; }
+
+    const { data, error } = await db
+      .from('Planes')
+      .select('*, Recitales(*)')
+      .eq('id', planId)
+      .single();
+
+    if (error || !data) throw new Error('Plan no encontrado');
+
+    // Reconstruir state desde la base de datos
+    const recital = data.Recitales;
+    const fechaDate = new Date(recital.fecha_hora);
+    state.concert  = recital.artista;
+    state.city     = recital.lugar;
+    state.date     = fechaDate.toISOString().split('T')[0];
+    state.planId   = planId;
+    state.plan     = {
+      temp:          parseInt(data.clima_info) || 20,
+      outfit:        (data.outfit_sugerido || '').split(', ').map(name => ({ icon: '👕', name, detail: '' })),
+      departureTime: (data.horario_salida || '18:30').substring(0, 5),
+      transport:     'Ver plan completo',
+      travelTime:    '',
+      checklist:     Array.isArray(data.checklist) ? data.checklist : [],
+      formattedDate: formatDate(fechaDate.getFullYear(), fechaDate.getMonth() + 1, fechaDate.getDate()),
+      shortDate:     formatShortDate(fechaDate.getDate(), fechaDate.getMonth() + 1),
+    };
+
+    renderResults();
+    setTimeout(() => showScreen('screen-results'), 800);
+
+  } catch (err) {
+    console.warn('No se pudo cargar el plan:', err.message);
+    showScreen('screen-home');
+    showToast('No se encontró ese plan 😢');
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   initSlider();
 
@@ -395,4 +513,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const today = new Date().toISOString().split('T')[0];
     dateInput.setAttribute('min', today);
   }
+
+  // Si la URL tiene ?plan=UUID, cargar ese plan desde Supabase
+  loadPlanFromURL();
 });
