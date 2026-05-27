@@ -43,7 +43,7 @@
 | `plan_viewed_from_link` | plan_id, concert, city |
 
 ## Funcionalidades Implementadas
-- [x] Pantalla Home **(Rediseñada con identidad Manija)**
+- [x] Pantalla Home **(Rediseñada con identidad Manija, foto propia y textos finales)**
 - [x] Formulario (artista, ciudad, fecha, compañía, presupuesto)
 - [x] Pantalla de carga animada
 - [x] Resultados (outfit, horario, checklist)
