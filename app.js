@@ -545,4 +545,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Si la URL tiene ?plan=UUID, cargar ese plan desde Supabase
   loadPlanFromURL();
+
+  // ===========================
+  // HERO IMAGE CAROUSEL
+  // ===========================
+  const heroImages = [
+    'assets/hero_musician.jpg',
+    'assets/hero_2.jpg',
+    'assets/hero_3.png'
+  ];
+  let currentHeroIndex = 0;
+  const heroImgElement = document.querySelector('.hero-img');
+  
+  if (heroImgElement) {
+    setInterval(() => {
+      // Fade out
+      heroImgElement.style.opacity = 0;
+      
+      // Cambiar src a la mitad de la transición (400ms)
+      setTimeout(() => {
+        currentHeroIndex = (currentHeroIndex + 1) % heroImages.length;
+        heroImgElement.src = heroImages[currentHeroIndex];
+        
+        // Fade in
+        heroImgElement.style.opacity = 1;
+      }, 400); 
+    }, 6000);
+  }
 });

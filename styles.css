@@ -178,6 +178,7 @@ body {
   border-top-right-radius: 20px;
   border-bottom-left-radius: 20px;
   z-index: 1;
+  transition: opacity 0.4s ease-in-out;
 }
 
 /* Floating Badges */
