@@ -241,12 +241,12 @@ body {
   color: #4A4A4A;
   font-size: 16px;
   font-weight: 600;
-  margin-bottom: 24px;
+  margin-bottom: 34px;
 }
 
 /* CTA Button new */
 .btn-primary.new-btn {
-  margin: 0 26px 36px;
+  margin: 0 26px 44px;
   background: linear-gradient(to right, #EE7BB0, #E85D9A);
   color: #fff;
   display: flex;
@@ -262,16 +262,16 @@ body {
 .features-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  padding: 0 26px 24px;
+  gap: 20px;
+  padding: 0 26px 36px;
 }
 
 .feature-card {
-  padding: 20px;
+  padding: 24px 20px;
   border-radius: 20px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
 }
 
 .fcard-blue { background: #E2E8F0; }
@@ -305,10 +305,10 @@ body {
 
 /* Social Proof */
 .social-proof {
-  margin: 0 26px 40px;
+  margin: 0 26px 50px;
   background: #FDE8C4;
   border-radius: 16px;
-  padding: 14px 20px;
+  padding: 16px 20px;
   display: flex;
   align-items: center;
   gap: 14px;
@@ -399,6 +399,14 @@ body {
   font-size: 15px;
   font-weight: 800;
   cursor: pointer;
+}
+
+.footer-copyright {
+  margin-top: 32px;
+  text-align: center;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.4);
+  font-weight: 700;
 }
 
 /* Primary CTA button */

@@ -1,8 +1,8 @@
-# 🧠 Memory — Recital Planner
+# 🧠 Memory — Manija (ex Recital Planner)
 
 ## Estado Actual
 - **Fase:** Producción / Live
-- **Última actualización:** 2026-05-25
+- **Última actualización:** 2026-05-26
 
 ## URLs
 - **Repositorio GitHub:** https://github.com/cinrobles/Recital-planner
@@ -43,7 +43,7 @@
 | `plan_viewed_from_link` | plan_id, concert, city |
 
 ## Funcionalidades Implementadas
-- [x] Pantalla Home
+- [x] Pantalla Home **(Rediseñada con identidad Manija)**
 - [x] Formulario (artista, ciudad, fecha, compañía, presupuesto)
 - [x] Pantalla de carga animada
 - [x] Resultados (outfit, horario, checklist)
@@ -53,6 +53,7 @@
 - [x] Cargar plan desde URL compartida
 - [x] GitHub Pages publicado
 - [x] PostHog analytics integrado
+- [x] **Responsividad Mobile nativa (`100dvh`, sin marcos limitantes)**
 
 ## Pendiente / Próximos pasos
 - [ ] Tabla Participantes: que otros se anoten al plan compartido
